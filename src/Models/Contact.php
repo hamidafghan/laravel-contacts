@@ -5,11 +5,11 @@ namespace Jenishev\Laravel\Contacts\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
+use Jenishev\Laravel\Contacts\Casts\AsModelClass;
 use Jenishev\Laravel\Contacts\Casts\AsValue;
+use Jenishev\Laravel\Contacts\Concerns\Blameable;
 use Jenishev\Laravel\Contacts\Contracts\HasContacts;
 use Jenishev\Laravel\Contacts\Enums\ContactTypeEnum;
-use Jenishev\Laravel\Support\Eloquent\Casts\AsModelClass;
-use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
  * Contact model for managing contact information.
@@ -29,7 +29,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  */
 class Contact extends Model
 {
-    use BlameableTrait;
+    use Blameable;
 
     /**
      * {@inheritDoc}

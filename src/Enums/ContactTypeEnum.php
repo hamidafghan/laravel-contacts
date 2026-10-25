@@ -2,6 +2,7 @@
 
 namespace Jenishev\Laravel\Contacts\Enums;
 
+use Illuminate\Support\Str;
 use Jenishev\Laravel\Contacts\Casts\Strategies\EmailStrategy;
 use Jenishev\Laravel\Contacts\Casts\Strategies\NullStrategy;
 use Jenishev\Laravel\Contacts\Casts\Strategies\PhoneStrategy;
@@ -9,19 +10,12 @@ use Jenishev\Laravel\Contacts\Casts\Strategies\Strategy;
 use Jenishev\Laravel\Contacts\Casts\Strategies\TelegramStrategy;
 use Jenishev\Laravel\Contacts\Casts\Strategies\UrlStrategy;
 use Jenishev\Laravel\Contacts\Casts\Strategies\WhatsAppStrategy;
-use Jenishev\Laravel\Support\Enums\Concerns\HasChoices;
-use Jenishev\Laravel\Support\Enums\Concerns\HasValues;
 
 /**
  * Defines available contact method types for the system.
  */
 enum ContactTypeEnum: string
 {
-    use HasChoices {
-        HasChoices::label as traitLabel;
-    }
-    use HasValues;
-
     case Email = 'email';
     case Other = 'other';
     case Phone = 'phone';
@@ -37,8 +31,34 @@ enum ContactTypeEnum: string
         return match ($this) {
             self::Url => 'URL',
             self::Whatsapp => 'WhatsApp',
-            default => $this->traitLabel(),
+            default => __(Str::headline(Str::lower($this->value))),
         };
+    }
+
+    /**
+     * Get all enum values.
+     *
+     * @return array<int, string>
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    /**
+     * Get enum values mapped to their labels.
+     *
+     * @return array<string, string>
+     */
+    public static function choices(): array
+    {
+        $choices = [];
+
+        foreach (self::cases() as $case) {
+            $choices[$case->value] = $case->label();
+        }
+
+        return $choices;
     }
 
     /**

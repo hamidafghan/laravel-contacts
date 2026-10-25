@@ -20,21 +20,19 @@
     "require": {
         "php": "^8.1",
         "egulias/email-validator": "^4.0",
-        "illuminate/contracts": "^11.0||^12.0",
+        "illuminate/contracts": "^11.0||^12.0||^13.0",
         "league/uri": "^7.8",
         "propaganistas/laravel-phone": "^6.0",
-        "richan-fongdasen/eloquent-blameable": "^1.11",
-        "spatie/laravel-package-tools": "^1.16",
-        "xcopy/laravel-support": "dev-main"
+        "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
         "larastan/larastan": "^3.9",
         "laravel/pint": "^1.14",
         "nunomaduro/collision": "^8.8",
-        "orchestra/testbench": "^10.0.0||^9.0.0",
-        "pestphp/pest": "^4.0",
-        "pestphp/pest-plugin-arch": "^4.0",
-        "pestphp/pest-plugin-laravel": "^4.0",
+        "orchestra/testbench": "^11.0||^10.0||^9.0",
+        "pestphp/pest": "^4.0||^5.0",
+        "pestphp/pest-plugin-arch": "^4.0||^5.0",
+        "pestphp/pest-plugin-laravel": "^4.0||^5.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0"
