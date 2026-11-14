@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jenishev\Laravel\Contacts\Enums\ContactTypeEnum;
 use Jenishev\Laravel\Contacts\Models\Contact;
@@ -7,6 +8,10 @@ use Workbench\App\Models\Customer;
 use Workbench\App\Models\User;
 
 uses(RefreshDatabase::class);
+
+afterEach(function () {
+    Relation::morphMap([], false);
+});
 
 beforeEach(function () {
     $this->customer = Customer::create([
@@ -52,6 +57,33 @@ it('casts model_type as model class', function () {
     ]);
 
     expect($contact->model_type)->toBe(Customer::class);
+});
+
+it('supports morph-map aliases without changing their stored value', function () {
+    Relation::morphMap(['customer' => Customer::class]);
+
+    $firstContact = $this->customer->contacts()->create([
+        'type' => ContactTypeEnum::Email,
+        'value' => 'first@example.com',
+        'is_primary' => true,
+    ]);
+
+    $secondContact = $this->customer->contacts()->create([
+        'type' => ContactTypeEnum::Email,
+        'value' => 'second@example.com',
+        'is_primary' => true,
+    ]);
+
+    expect($firstContact->model_type)->toBe('customer')
+        ->and($secondContact->model_type)->toBe('customer')
+        ->and($secondContact->model)->toBeInstanceOf(Customer::class);
+
+    $this->assertDatabaseHas(config('contacts.table'), [
+        'id' => $secondContact->id,
+        'model_type' => 'customer',
+    ]);
+
+    expect($firstContact->fresh()->is_primary)->toBeFalse();
 });
 
 it('casts model_id as integer', function () {

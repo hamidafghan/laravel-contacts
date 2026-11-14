@@ -5,6 +5,7 @@ namespace Jenishev\Laravel\Contacts\Casts;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
 
 /**
@@ -64,7 +65,17 @@ class AsModelClass implements Castable
                     throw new InvalidArgumentException(sprintf('Class or interface [%s] does not exist.', $class));
                 }
 
-                if (! is_string($value) || ! is_a($value, $class, true)) {
+                if (! is_string($value)) {
+                    throw new InvalidArgumentException(sprintf('Class [%s] must implement [%s] or extend it.', $value, $class));
+                }
+
+                // A polymorphic relation may persist a morph-map alias instead of
+                // the model's fully qualified class name. Resolve it only for
+                // validation; the original value must remain untouched so its
+                // database representation stays consistent with the relation.
+                $modelClass = Relation::getMorphedModel($value) ?? $value;
+
+                if (! is_a($modelClass, $class, true)) {
                     throw new InvalidArgumentException(sprintf('Class [%s] must implement [%s] or extend it.', $value, $class));
                 }
             }
