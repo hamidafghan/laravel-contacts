@@ -14,8 +14,8 @@ Perfect for multi-tenant SaaS applications, CRMs, or property management systems
 - **Smart value handling**: Automatic validation and normalization via strategy pattern
 - **Primary & verified flags**: Mark contacts as primary or verified
 - **Unique constraints**: Prevents duplicate contacts per model
-- **Type-safe**: Uses PHP 8.1+ enums and strict typing
-- **Framework support**: Compatible with Laravel 11, 12, and 13 (including PHP 8.4)
+- **Type-safe**: Uses PHP 8.3+ enums and strict typing
+- **Framework support**: Compatible with Laravel 12 and 13
 
 ## Installation
 
