@@ -9,7 +9,6 @@ use Jenishev\Laravel\Contacts\Casts\AsModelClass;
 use Jenishev\Laravel\Contacts\Casts\AsValue;
 use Jenishev\Laravel\Contacts\Contracts\Contactable;
 use Jenishev\Laravel\Contacts\Enums\ContactTypes;
-use Jenishev\Laravel\Support\Eloquent\Casts\AsModelClass;
 
 /**
  * Contact model for managing contact information.

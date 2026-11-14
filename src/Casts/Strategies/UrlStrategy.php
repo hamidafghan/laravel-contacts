@@ -31,6 +31,10 @@ class UrlStrategy implements Strategy
             $this->fail('is empty');
         }
 
+        if (preg_match('/\s/', $value)) {
+            $this->fail("invalid format: '$raw'");
+        }
+
         if (! preg_match('#^https?://#i', $value)) {
             $value = 'https://' . $value;
         }

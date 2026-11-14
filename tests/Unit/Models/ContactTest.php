@@ -54,13 +54,13 @@ it('supports morph-map aliases without changing their stored value', function ()
     Relation::morphMap(['customer' => Customer::class]);
 
     $firstContact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Email,
+        'type' => ContactTypes::Email,
         'value' => 'first@example.com',
         'is_primary' => true,
     ]);
 
     $secondContact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Email,
+        'type' => ContactTypes::Email,
         'value' => 'second@example.com',
         'is_primary' => true,
     ]);
