@@ -13,6 +13,8 @@ use Jenishev\Laravel\Contacts\Casts\Strategies\WhatsAppStrategy;
 
 /**
  * Defines available contact method types for the system.
+ *
+ * @deprecated use \Jenishev\Laravel\Contacts\Enums\ContactTypes instead.
  */
 enum ContactTypeEnum: string
 {

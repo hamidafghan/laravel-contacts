@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jenishev\Laravel\Contacts\Enums\ContactTypeEnum;
+use Jenishev\Laravel\Contacts\Enums\ContactTypes;
 use Workbench\App\Models\Customer;
-use Workbench\App\Models\User;
 
 uses(RefreshDatabase::class);
 
@@ -11,18 +10,11 @@ beforeEach(function () {
     $this->customer = Customer::create([
         'name' => 'Test Customer',
     ]);
-
-    $this->user = User::create([
-        'name' => 'Test User',
-        'email' => 'test@example.com',
-    ]);
-
-    $this->actingAs($this->user);
 });
 
 it('casts value based on contact type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Email,
+        'type' => ContactTypes::Email,
         'value' => 'test@example.com',
     ]);
 
@@ -31,7 +23,7 @@ it('casts value based on contact type', function () {
 
 it('uses appropriate strategy based on type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Phone,
+        'type' => ContactTypes::Phone,
         'value' => '+996555123456',
     ]);
 
@@ -40,7 +32,7 @@ it('uses appropriate strategy based on type', function () {
 
 it('resolves strategy from enum instance', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Email,
+        'type' => ContactTypes::Email,
         'value' => 'TEST@EXAMPLE.COM',
     ]);
 
@@ -58,7 +50,7 @@ it('resolves strategy from string value', function () {
 
 it('transforms value on set', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Email,
+        'type' => ContactTypes::Email,
         'value' => 'TEST@Example.COM',
     ]);
 
@@ -67,7 +59,7 @@ it('transforms value on set', function () {
 
 it('retrieves value correctly on get', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Telegram,
+        'type' => ContactTypes::Telegram,
         'value' => 'username',
     ]);
 
@@ -78,7 +70,7 @@ it('retrieves value correctly on get', function () {
 
 it('uses email strategy for email type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Email,
+        'type' => ContactTypes::Email,
         'value' => 'User@Example.Com',
     ]);
 
@@ -87,7 +79,7 @@ it('uses email strategy for email type', function () {
 
 it('uses phone strategy for phone type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Phone,
+        'type' => ContactTypes::Phone,
         'value' => '0555123456',
     ]);
 
@@ -96,7 +88,7 @@ it('uses phone strategy for phone type', function () {
 
 it('uses url strategy for url type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Url,
+        'type' => ContactTypes::Url,
         'value' => 'example.com',
     ]);
 
@@ -105,7 +97,7 @@ it('uses url strategy for url type', function () {
 
 it('uses whatsapp strategy for whatsapp type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Whatsapp,
+        'type' => ContactTypes::Whatsapp,
         'value' => '0555123456',
     ]);
 
@@ -114,7 +106,7 @@ it('uses whatsapp strategy for whatsapp type', function () {
 
 it('uses telegram strategy for telegram type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Telegram,
+        'type' => ContactTypes::Telegram,
         'value' => 'TestUser',
     ]);
 
@@ -124,7 +116,7 @@ it('uses telegram strategy for telegram type', function () {
 
 it('uses null strategy for other type', function () {
     $contact = $this->customer->contacts()->create([
-        'type' => ContactTypeEnum::Other,
+        'type' => ContactTypes::Other,
         'value' => 'some value',
     ]);
 
